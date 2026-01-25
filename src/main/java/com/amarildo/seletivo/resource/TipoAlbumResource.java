@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tipos-album")
+@RequestMapping("/api/v1/tipos-album")
 public class TipoAlbumResource {
 
     @Autowired

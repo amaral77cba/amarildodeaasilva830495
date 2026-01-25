@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/arquivos")
+@RequestMapping("/api/v1/arquivos")
 public class ArquivoResource {
 
     @Autowired

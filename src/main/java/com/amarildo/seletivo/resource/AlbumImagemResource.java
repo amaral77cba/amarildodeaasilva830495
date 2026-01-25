@@ -11,17 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/albuns")
+@RequestMapping("/api/v1/albuns")
 public class AlbumImagemResource {
 
     @Autowired
     private AlbumImagemService albumImagemService;
 
 
-    @PostMapping(
-            value = "/{idenAlbum}/imagens",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
-    )
+    @PostMapping(value = "/{idenAlbum}/imagens", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AlbumImagemResponseDTO> adicionarImagem(
             @PathVariable Long idenAlbum,
             @RequestPart("file") MultipartFile file,

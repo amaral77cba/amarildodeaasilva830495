@@ -13,8 +13,6 @@ public class AlbumImagemResponseDTO {
     private OffsetDateTime dataAlbumImagem;
 
 
-
-
     public AlbumImagemResponseDTO(Long idenAlbumImagem, Long idenAlbum, UUID uuidArquivo, Long idenArquivo, OffsetDateTime dataAlbumImagem) {
         this.idenAlbumImagem = idenAlbumImagem;
         this.idenAlbum = idenAlbum;

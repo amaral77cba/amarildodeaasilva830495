@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/artistas-albuns")
+@RequestMapping("api/v1/artistas-albuns")
 public class ArtistaAlbumResource {
 
     @Autowired
