@@ -1,5 +1,6 @@
 package com.amarildo.seletivo.service;
 
+import com.amarildo.seletivo.enumerador.TipoArtista;
 import com.amarildo.seletivo.model.Album;
 import com.amarildo.seletivo.model.Artista;
 import com.amarildo.seletivo.model.ArtistaAlbum;
@@ -86,6 +87,15 @@ public class ArtistaAlbumService {
                 album.getIdenAlbum()
         );
     }
+
+    public List<ArtistaAlbumListDTO> buscarPorTipoArtista(TipoArtista tipo) {
+        return artistaAlbumRepository.findByTipoArtista(tipo);
+    }
+
+    public List<ArtistaAlbumListDTO> consultar(TipoArtista tipo, String nomeArtista) {
+        return artistaAlbumRepository.consultar(tipo, nomeArtista);
+    }
+
 
 }
 

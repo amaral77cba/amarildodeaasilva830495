@@ -138,5 +138,6 @@ public class AlbumService {
                         album.getTipoAlbum().getDescricaoTipoAlbum()
                 ));
     }
+
 }
 
