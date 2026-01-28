@@ -47,11 +47,11 @@ public class ArquivoResource {
     }
 
     //Remove arquivo(MinIO e Banco)
-    @DeleteMapping("/{idenArquivo}")
-    public ResponseEntity<Void> remover(@PathVariable Long idenArquivo) {
-        arquivoStorageService.remover(idenArquivo);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/{idenArquivo}")
+//    public ResponseEntity<Void> remover(@PathVariable Long idenArquivo) {
+//        arquivoStorageService.remover(idenArquivo);
+//        return ResponseEntity.noContent().build();
+//    }
 
     @GetMapping("/{uuid}/download")
     public ResponseEntity<Resource> download(@PathVariable UUID uuid) {

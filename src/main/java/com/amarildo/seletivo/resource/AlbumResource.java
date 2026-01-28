@@ -1,16 +1,18 @@
 package com.amarildo.seletivo.resource;
 
-import com.amarildo.seletivo.model.Album;
-import com.amarildo.seletivo.model.TipoAlbum;
+
 import com.amarildo.seletivo.model.dto.AlbumCreateDTO;
 import com.amarildo.seletivo.model.dto.AlbumResponseDTO;
-import com.amarildo.seletivo.repository.AlbumRepository;
 import com.amarildo.seletivo.service.AlbumService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -52,5 +54,12 @@ public class AlbumResource {
 
         return ResponseEntity.ok(albumService.atualizar(idenAlbum, albumAtualizado));
     }
+
+    @GetMapping("/pagina")
+    public ResponseEntity<Page<AlbumResponseDTO>> listarPaginado(@PageableDefault(size = 10, page = 0) Pageable pageable) {
+        Page<AlbumResponseDTO> pagina = albumService.listarTodosPaginado(pageable);
+        return ResponseEntity.ok(pagina);
+    }
+
 }
 

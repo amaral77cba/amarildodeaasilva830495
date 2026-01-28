@@ -6,9 +6,9 @@ INSERT INTO tipo_album (descricao_tipo_album) VALUES ('Ao Vivo');
 INSERT INTO tipo_album (descricao_tipo_album) VALUES ('Greatest Hits');
 
 --insercao de alguns Artistas
-INSERT INTO artista (nome_artista, tipo_artista) VALUES ('Serj Tankian', 'SOLO');
-INSERT INTO artista (nome_artista, tipo_artista) VALUES ('Mike Shinoda', 'SOLO');
-INSERT INTO artista (nome_artista, tipo_artista) VALUES ('Michel Teló', 'SOLO');
+INSERT INTO artista (nome_artista, tipo_artista) VALUES ('Serj Tankian', 'CANTOR');
+INSERT INTO artista (nome_artista, tipo_artista) VALUES ('Mike Shinoda', 'CANTOR');
+INSERT INTO artista (nome_artista, tipo_artista) VALUES ('Michel Teló', 'CANTOR');
 INSERT INTO artista (nome_artista, tipo_artista) VALUES ('Guns N'' Roses', 'BANDA');
 
 --insercao de alguns albuns
@@ -33,3 +33,23 @@ INSERT INTO album (descricao_album, iden_tipo_album) VALUES ('Use Your Illusion 
 INSERT INTO album (descricao_album, iden_tipo_album) VALUES ('Use Your Illusion II', 1);
 INSERT INTO album (descricao_album, iden_tipo_album) VALUES ('Greatest Hits', 4);
  
+
+
+--Outros inserts
+INSERT INTO album (descricao_album, iden_tipo_album) VALUES ('Xou da Xuxa 3', 1);
+INSERT INTO album (descricao_album, iden_tipo_album) VALUES ('Músicas para Louvar ao Senhor', 1);
+INSERT INTO album (descricao_album, iden_tipo_album) VALUES ('Xegundo Xou da Xuxa', 1);
+INSERT INTO album (descricao_album, iden_tipo_album) VALUES ('Xou da Xuxa', 1);
+INSERT INTO album (descricao_album, iden_tipo_album) VALUES ('4º Xou da Xuxa', 1);
+INSERT INTO album (descricao_album, iden_tipo_album) VALUES ('Quatro Estações: O Show', 3);
+INSERT INTO album (descricao_album, iden_tipo_album) VALUES ('As Quatro Estações', 1);
+INSERT INTO album (descricao_album, iden_tipo_album) VALUES ('Era Uma Vez... Ao Vivo', 3);
+INSERT INTO album (descricao_album, iden_tipo_album) VALUES ('Djavan ao Vivo', 1);
+INSERT INTO album (descricao_album, iden_tipo_album) VALUES ('Esse Cara Sou Eu', 1);
+
+
+INSERT INTO artista (nome_artista, tipo_artista) VALUES ('Xuxa', 'CANTOR');
+INSERT INTO artista (nome_artista, tipo_artista) VALUES ('Padre Marcelo Rossi', 'CANTOR');
+INSERT INTO artista (nome_artista, tipo_artista) VALUES ('Sandy e Junior', 'BANDA');
+INSERT INTO artista (nome_artista, tipo_artista) VALUES ('Djavan', 'BANDA');
+INSERT INTO artista (nome_artista, tipo_artista) VALUES ('Roberto Carlos', 'CANTOR');
