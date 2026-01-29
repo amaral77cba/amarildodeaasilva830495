@@ -1,4 +1,4 @@
-package com.amarildo.seletivo.dto;
+package com.amarildo.seletivo.model.dto;
 
 import com.amarildo.seletivo.model.Album;
 

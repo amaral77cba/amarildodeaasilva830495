@@ -5,7 +5,6 @@ import com.amarildo.seletivo.model.TipoAlbum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -18,4 +17,5 @@ public interface AlbumRepository extends JpaRepository<Album, Long> {
     List<Album> findByTipoAlbum(TipoAlbum tipoAlbum);
 
     List<Album> findByTipoAlbum_IdenTipoAlbum(Long idenTipoAlbum);
+
 }

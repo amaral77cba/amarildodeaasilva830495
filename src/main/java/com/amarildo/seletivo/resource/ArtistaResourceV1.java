@@ -13,8 +13,8 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/artistas")
-public class ArtistaResource {
+@RequestMapping("/api/v1/artistas")
+public class ArtistaResourceV1 {
 
     @Autowired
     private ArtistaService artistaService;
@@ -41,15 +41,9 @@ public class ArtistaResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
     }
 
-    @PutMapping("/v1/{idenArtista}")
+    @PutMapping("/{idenArtista}")
     public ResponseEntity<Artista> atualizar(@PathVariable Long idenArtista, @Valid @RequestBody Artista artista){
         Artista artistaSalva = artistaService.atualizar(idenArtista, artista);
-        return ResponseEntity.ok(artistaSalva);
-    }
-
-    @PutMapping("v2/{idenArtista}")
-    public ResponseEntity<Artista> atualizarv2(@PathVariable Long idenArtista, @Valid @RequestBody Artista artista){
-        Artista artistaSalva = artistaService.atualizarv2(idenArtista, artista);
         return ResponseEntity.ok(artistaSalva);
     }
 

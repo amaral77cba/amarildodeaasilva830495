@@ -3,5 +3,5 @@ CREATE TABLE artista (
     nome_artista VARCHAR(200) NOT NULL,
     tipo_artista VARCHAR(10) NOT NULL,
     CONSTRAINT chk_tipo_artista
-        CHECK (tipo_artista IN ('SOLO', 'BANDA'))
+        CHECK (tipo_artista IN ('BANDA', 'CANTOR'))
 );
