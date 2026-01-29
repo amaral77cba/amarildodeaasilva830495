@@ -13,7 +13,7 @@ public class Arquivo {
     @Column(name = "iden_arquivo")
     private Long idenArquivo;
 
-    @Column(name = "uuid_arquivo")
+    @Column(name = "uuid_arquivo", unique = true)
     private UUID uuidArquivo;
 
     @Column(name = "nome_arquivo")

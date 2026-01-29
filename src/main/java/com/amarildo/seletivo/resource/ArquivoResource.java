@@ -1,8 +1,11 @@
 package com.amarildo.seletivo.resource;
 
 import com.amarildo.seletivo.model.Arquivo;
+import com.amarildo.seletivo.model.dto.ArquivoPresignedUrlDTO;
 import com.amarildo.seletivo.service.ArquivoService;
 import com.amarildo.seletivo.service.ArquivoStorageService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.core.io.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -79,6 +82,21 @@ public class ArquivoResource {
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         "attachment; filename=\"" + arquivo.getNomeArquivo() + "\"")
                 .body(resource);
+    }
+
+
+    @GetMapping("/{uuid}/link")
+    @Operation(
+            summary = "Gera link pré-assinado para download",
+            description = "Retorna uma URL temporária para download do arquivo com expiração de 30 minutos"
+    )
+    @ApiResponse(responseCode = "200", description = "Link gerado com sucesso")
+    @ApiResponse(responseCode = "404", description = "Arquivo não encontrado")
+    public ResponseEntity<ArquivoPresignedUrlDTO> gerarLinkDownload(@PathVariable UUID uuid) {
+
+        return ResponseEntity.ok(
+                arquivoService.gerarLinkDownload(uuid)
+        );
     }
 
 

@@ -1,7 +1,12 @@
 package com.amarildo.seletivo.service;
 
 import com.amarildo.seletivo.model.Arquivo;
+import com.amarildo.seletivo.model.dto.ArquivoPresignedUrlDTO;
 import com.amarildo.seletivo.repository.ArquivoRepository;
+import io.minio.GetPresignedObjectUrlArgs;
+import io.minio.http.Method;
+import io.minio.MinioClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +20,17 @@ import java.util.UUID;
 @Transactional
 public class ArquivoService {
 
+    @Value("${minio.presigned.expiry-minutes}")
+    private int expiracaoMinutos;
+
     @Autowired
     private ArquivoRepository arquivoRepository;
 
     @Autowired
     private MinioService minioService;
+
+    @Autowired
+    private MinioClient minioClient;
 
     public Arquivo salvar(Arquivo arquivo) {
         if (arquivo.getUuidArquivo() == null) {
@@ -103,6 +114,28 @@ public class ArquivoService {
     }
 
 
+    public ArquivoPresignedUrlDTO gerarLinkDownload(UUID uuid) {
+
+        Arquivo arquivo = arquivoRepository.findByUuidArquivo(uuid)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Arquivo não encontrado"));
+
+        try {
+            String url = minioClient.getPresignedObjectUrl(
+                    GetPresignedObjectUrlArgs.builder()
+                            .method(Method.GET)
+                            .bucket(arquivo.getBucket())
+                            .object(arquivo.getObjectName())
+                            .expiry(expiracaoMinutos * 60)
+                            .build()
+            );
+
+            return new ArquivoPresignedUrlDTO(url, expiracaoMinutos);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao gerar link pré-assinado", e);
+        }
+    }
 
 
 }
