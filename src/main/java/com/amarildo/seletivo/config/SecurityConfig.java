@@ -1,5 +1,6 @@
 package com.amarildo.seletivo.config;
 
+import com.amarildo.seletivo.security.JwtAuthenticationEntryPoint;
 import com.amarildo.seletivo.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,9 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
     @Value("${security.jwt.enabled:true}")
     private boolean jwtEnabled;
 
@@ -30,6 +34,7 @@ public class SecurityConfig {
             http
                     .csrf(csrf -> csrf.disable())
                     .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                    .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                     .authorizeHttpRequests(auth -> auth
                             .requestMatchers(
                                     "/login",

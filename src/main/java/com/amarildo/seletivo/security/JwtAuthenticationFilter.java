@@ -20,6 +20,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private JwtAuthenticationEntryPoint authenticationEntryPoint;
+
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
@@ -31,33 +34,40 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        final String authHeader = request.getHeader("Authorization");
+        try {
+            String authHeader = request.getHeader("Authorization");
 
-        System.out.println("###AuthorizationHeader: " + authHeader);
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
 
-        String username = null;
-        String jwt = null;
+                String jwt = authHeader.substring(7);
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            jwt = authHeader.substring(7);
-            username = jwtUtil.extrairUsername(jwt);
-            System.out.println("###Usuario: " + username + " jwt: " + jwt);
-        }
+                String username = jwtUtil.extrairUsername(jwt);
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                if (jwtUtil.validarToken(jwt, username)) {
 
-            if (jwtUtil.validarToken(jwt, username)) {
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(
+                                    username,
+                                    null,
+                                    Collections.emptyList()
+                            );
 
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
-                System.out.println("###TokenGerado: " + authToken);
-
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
             }
-        }
 
-        filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);
+
+        } catch (Exception ex) {
+
+            SecurityContextHolder.clearContext();
+            authenticationEntryPoint.commence(request, response,
+                    new org.springframework.security.authentication.InsufficientAuthenticationException(
+                            "Token inválido ou expirado"
+                    )
+            );
+        }
     }
 }
