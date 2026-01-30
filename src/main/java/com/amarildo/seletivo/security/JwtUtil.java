@@ -1,5 +1,6 @@
 package com.amarildo.seletivo.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
@@ -10,13 +11,23 @@ import java.util.Date;
 public class JwtUtil {
 
     private final String SECRET_KEY = "8f3c1a9e5b2d4e7a9c6f1d8b0a4e2f7c9d5b1a8e3f6c4d2b7a9e5c1"; // mudar em produção
-    private final long EXPIRATION_TIME = 5 * 60 * 1000; // 5 minutos em milissegundos
+    private final long ACCESS_TOKEN_EXPIRATION = 5 * 60 * 1000; // 5 minutos em milissegundos
+    private final long REFRESH_TOKEN_EXPIRATION = 1 * 24 * 60 * 60 * 1000; // 1 dia
 
-    public String gerarToken(String username) {
+    public String gerarAccessToken(String username) {
+        return gerarToken(username, ACCESS_TOKEN_EXPIRATION, "access");
+    }
+
+    public String gerarRefreshToken(String username) {
+        return gerarToken(username, REFRESH_TOKEN_EXPIRATION, "refresh");
+    }
+
+    public String gerarToken(String username, long expiration, String type) {
         return Jwts.builder()
                 .setSubject(username)
+                .claim("type", type)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
@@ -38,5 +49,23 @@ public class JwtUtil {
         Date exp = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getExpiration();
         return exp.before(new Date());
     }
+
+    public boolean isRefreshToken(String token) {
+        String type = (String) getClaims(token).get("type");
+        return "refresh".equals(type);
+    }
+
+    public boolean isAccessToken(String token) {
+        String type = (String) getClaims(token).get("type");
+        return "access".equals(type);
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
 }
 
