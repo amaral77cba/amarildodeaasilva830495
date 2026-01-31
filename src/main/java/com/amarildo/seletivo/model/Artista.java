@@ -1,6 +1,6 @@
 package com.amarildo.seletivo.model;
 
-import com.amarildo.seletivo.enumerador.TipoArtista;
+import com.amarildo.seletivo.model.enums.TipoArtista;
 import jakarta.persistence.*;
 
 @Entity

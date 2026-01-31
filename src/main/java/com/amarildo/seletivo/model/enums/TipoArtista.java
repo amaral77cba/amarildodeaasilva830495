@@ -1,4 +1,4 @@
-package com.amarildo.seletivo.enumerador;
+package com.amarildo.seletivo.model.enums;
 
 public enum TipoArtista {
     BANDA,

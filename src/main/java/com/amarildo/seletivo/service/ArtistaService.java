@@ -1,6 +1,9 @@
 package com.amarildo.seletivo.service;
 
-import com.amarildo.seletivo.enumerador.TipoArtista;
+import com.amarildo.seletivo.model.TipoAlbum;
+import com.amarildo.seletivo.model.dto.ArtistaCreateDTO;
+import com.amarildo.seletivo.model.dto.ArtistaUpdateDTO;
+import com.amarildo.seletivo.model.enums.TipoArtista;
 import com.amarildo.seletivo.model.Artista;
 import com.amarildo.seletivo.repository.ArtistaRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -10,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -19,13 +21,17 @@ public class ArtistaService {
     @Autowired
     private ArtistaRepository artistaRepository;
 
-    public Artista salvar(Artista artista){
+    public Artista salvar(ArtistaCreateDTO dto){
 
-        boolean existeArtista = artistaRepository.existsByNomeArtistaIgnoreCase(artista.getNomeArtista());
+        boolean existeArtista = artistaRepository.existsByNomeArtistaIgnoreCase(dto.getNomeArtista());
 
         if (existeArtista) {
             throw new IllegalArgumentException("Já existe um artista cadastrado com esse nome");
         }
+
+        Artista artista = new Artista();
+        artista.setNomeArtista(dto.getNomeArtista());
+        artista.setTipoArtista(dto.getTipoArtista());
 
         return artistaRepository.save(artista);
     }
@@ -44,7 +50,7 @@ public class ArtistaService {
         return artistaRepository.findByTipoArtista(tipoArtista);
     }
 
-    public Artista atualizar(Long idenArtista, Artista artistaAtualizado) {
+    public Artista atualizar(Long idenArtista, ArtistaUpdateDTO artistaAtualizado) {
         Artista artistaAux = buscarPorId(idenArtista);
 
         //verifica se o nome foi alterado
@@ -63,14 +69,14 @@ public class ArtistaService {
         return artistaRepository.save(artistaAux);
     }
 
-    public Artista atualizarv2(Long idenArtista, Artista artistaAtualizado) {
+    public Artista atualizarv2(Long idenArtista, ArtistaUpdateDTO dto) {
         Artista artistaAux = buscarPorId(idenArtista);
 
         // verifica se o nome foi alterado
-        if (artistaAtualizado.getNomeArtista() != null &&
-                !artistaAux.getNomeArtista().equalsIgnoreCase(artistaAtualizado.getNomeArtista())) {
+        if (dto.getNomeArtista() != null &&
+                !artistaAux.getNomeArtista().equalsIgnoreCase(dto.getNomeArtista())) {
 
-            boolean nomeJahExiste = artistaRepository.existsByNomeArtistaIgnoreCaseAndIdenArtistaNot(artistaAtualizado.getNomeArtista(), idenArtista);
+            boolean nomeJahExiste = artistaRepository.existsByNomeArtistaIgnoreCaseAndIdenArtistaNot(dto.getNomeArtista(), idenArtista);
 
             if (nomeJahExiste) {
                 throw new IllegalArgumentException(
@@ -78,7 +84,7 @@ public class ArtistaService {
             }
         }
 
-        BeanUtils.copyProperties(artistaAtualizado, artistaAux, "idenArtista");
+        BeanUtils.copyProperties(dto, artistaAux, "idenArtista");
 
         return artistaRepository.save(artistaAux);
     }

@@ -1,7 +1,6 @@
 package com.amarildo.seletivo.resource;
 
-import com.amarildo.seletivo.enumerador.TipoArtista;
-import com.amarildo.seletivo.model.ArtistaAlbum;
+import com.amarildo.seletivo.model.enums.TipoArtista;
 import com.amarildo.seletivo.model.dto.ArtistaAlbumCreateDTO;
 import com.amarildo.seletivo.model.dto.ArtistaAlbumListDTO;
 import com.amarildo.seletivo.model.dto.ArtistaAlbumResponseDTO;
