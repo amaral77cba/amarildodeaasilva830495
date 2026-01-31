@@ -1,0 +1,5 @@
+CREATE TABLE tbregional (
+    id INT PRIMARY KEY,
+    nome VARCHAR(200) NOT NULL,
+    ativo BOOLEAN NOT NULL DEFAULT TRUE
+);

@@ -27,9 +27,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(csrf -> csrf.disable());
+        //http.csrf(csrf -> csrf.disable());
 
-        if (jwtEnabled) {
+        //if (jwtEnabled) {
 
             http
                     .csrf(csrf -> csrf.disable())
@@ -37,8 +37,8 @@ public class SecurityConfig {
                     .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                     .authorizeHttpRequests(auth -> auth
                             .requestMatchers(
-                                    "/login",
-                                    "/refresh",
+                                    "/api/v1/login",
+                                    "/api/v1/refresh",
                                     "/v3/api-docs/**",
                                     "/swagger-ui/**",
                                     "/swagger-ui.html"
@@ -46,12 +46,12 @@ public class SecurityConfig {
                             .anyRequest().authenticated()
                     )
                     .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        } else {
-            http
-                    .authorizeHttpRequests(auth -> auth
-                            .anyRequest().permitAll()
-                    );
-        }
+        //} else {
+        //    http
+        //            .authorizeHttpRequests(auth -> auth
+        //                    .anyRequest().permitAll()
+        //            );
+        //}
 
         return http.build();
     }
