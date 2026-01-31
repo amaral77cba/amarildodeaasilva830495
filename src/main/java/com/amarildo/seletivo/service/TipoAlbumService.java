@@ -1,6 +1,8 @@
 package com.amarildo.seletivo.service;
 
 import com.amarildo.seletivo.model.TipoAlbum;
+import com.amarildo.seletivo.model.dto.TipoAlbumCreateDTO;
+import com.amarildo.seletivo.model.dto.TipoAlbumUpdateDTO;
 import com.amarildo.seletivo.repository.TipoAlbumRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +26,22 @@ public class TipoAlbumService {
                         "TipoAlbum não encontrado para o id: " + idenTipoAlbum));
    }
 
-   public TipoAlbum salvar(TipoAlbum tipoAlbum) {
+   public TipoAlbum salvar(TipoAlbumCreateDTO dto) {
 
-       boolean existe = tipoAlbumRepository.existsByDescricaoTipoAlbumIgnoreCase(tipoAlbum.getDescricaoTipoAlbum());
+       boolean existe = tipoAlbumRepository.existsByDescricaoTipoAlbumIgnoreCase(dto.getDescricaoTipoAlbum());
 
        if (existe) {
            throw new IllegalArgumentException(
                    "Já existe um tipo de álbum cadastrado com essa descrição");
        }
 
-        return tipoAlbumRepository.save(tipoAlbum);
+       TipoAlbum tipoAlbum = new TipoAlbum();
+       tipoAlbum.setDescricaoTipoAlbum(dto.getDescricaoTipoAlbum());
+
+       return tipoAlbumRepository.save(tipoAlbum);
     }
 
-   public TipoAlbum atualizar(Long idenTipoAlbum, TipoAlbum tipoAlbumAtualizado) {
+   public TipoAlbum atualizar(Long idenTipoAlbum, TipoAlbumUpdateDTO tipoAlbumAtualizado) {
         TipoAlbum tipoAlbumAux = buscarPorId(idenTipoAlbum);
 
        if (!tipoAlbumAux.getDescricaoTipoAlbum()

@@ -117,9 +117,6 @@ public class AuthResource {
             // Extrai usuário do refreshToken
             String username = jwtUtil.extrairUsername(refreshToken);
 
-            // Aqui você poderia verificar no banco se o refreshToken ainda é válido
-            // Ex: user.getRefreshToken().equals(refreshToken)
-
             // Gera novo accessToken
             String newAccessToken = jwtUtil.gerarAccessToken(username);
 
