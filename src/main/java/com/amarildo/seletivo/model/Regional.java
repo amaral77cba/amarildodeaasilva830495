@@ -1,15 +1,13 @@
 package com.amarildo.seletivo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tbregional")
 public class Regional {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, length = 200)
@@ -18,13 +16,17 @@ public class Regional {
     @Column(nullable = false)
     private Boolean ativo = true;
 
+    @Column(name = "id_externo")
+    private Integer idExterno; // ID DA API EXTERNA
+
     public Regional() {
     }
 
-    public Regional(Integer id, String nome, Boolean ativo) {
+    public Regional(Integer id, String nome, Boolean ativo, Integer idExterno) {
         this.id = id;
         this.nome = nome;
         this.ativo = ativo;
+        this.idExterno = idExterno;
     }
 
     public Integer getId() {
@@ -49,6 +51,14 @@ public class Regional {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public Integer getIdExterno() {
+        return idExterno;
+    }
+
+    public void setIdExterno(Integer idExterno) {
+        this.idExterno = idExterno;
     }
 }
 
