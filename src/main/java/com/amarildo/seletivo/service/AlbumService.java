@@ -4,6 +4,7 @@ import com.amarildo.seletivo.model.Album;
 import com.amarildo.seletivo.model.TipoAlbum;
 import com.amarildo.seletivo.model.dto.AlbumCreateDTO;
 import com.amarildo.seletivo.model.dto.AlbumResponseDTO;
+import com.amarildo.seletivo.model.dto.AlbumUpdateDTO;
 import com.amarildo.seletivo.repository.AlbumRepository;
 import com.amarildo.seletivo.repository.TipoAlbumRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -93,15 +94,15 @@ public class AlbumService {
                 .orElseThrow(() ->
                         new EntityNotFoundException("Álbum não encontrado para o id: " + idenAlbum));
     }
-    public AlbumResponseDTO atualizar(Long idenAlbum, AlbumCreateDTO albumAtualizado) {
+    public AlbumResponseDTO atualizar(Long idenAlbum, AlbumUpdateDTO dto) {
 
         Album albumAux = buscarEntidadePorId(idenAlbum);
 
         // verifica se a descrição foi alterada
         if (!albumAux.getDescricaoAlbum()
-                .equalsIgnoreCase(albumAtualizado.getDescricaoAlbum())) {
+                .equalsIgnoreCase(dto.getDescricaoAlbum())) {
 
-            boolean descricaoJahExiste = albumRepository.existsByDescricaoAlbumIgnoreCaseAndIdenAlbumNot(albumAtualizado.getDescricaoAlbum(), idenAlbum);
+            boolean descricaoJahExiste = albumRepository.existsByDescricaoAlbumIgnoreCaseAndIdenAlbumNot(dto.getDescricaoAlbum(), idenAlbum);
 
             if (descricaoJahExiste) {
                 throw new IllegalArgumentException("Já existe outro álbum cadastrado com essa descrição");
@@ -109,13 +110,13 @@ public class AlbumService {
         }
 
         TipoAlbum tipoAlbum = tipoAlbumRepository
-                .findById(albumAtualizado.getIdenTipoAlbum())
+                .findById(dto.getIdenTipoAlbum())
                 .orElseThrow(() ->
                         new EntityNotFoundException("Tipo de álbum não encontrado"));
 
 
         // atualiza campos permitidos
-        albumAux.setDescricaoAlbum(albumAtualizado.getDescricaoAlbum());
+        albumAux.setDescricaoAlbum(dto.getDescricaoAlbum());
         albumAux.setTipoAlbum(tipoAlbum);
 
         Album salvo = albumRepository.save(albumAux);

@@ -17,7 +17,6 @@ public class Album {
     @Column(name = "descricao_album")
     private String descricaoAlbum;
 
-    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "iden_tipo_album",
