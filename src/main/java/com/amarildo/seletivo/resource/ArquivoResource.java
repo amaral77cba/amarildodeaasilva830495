@@ -38,8 +38,40 @@ public class ArquivoResource {
 
     //Upload do arquivo
     @PostMapping(consumes = "multipart/form-data")
+    @Operation(
+            summary = "Upload de arquivo",
+            description = "Realiza o upload de um arquivo para o storage (MinIO) e " +
+                            "persiste seus metadados no banco de dados. " +
+                            "Permite informar uma descrição opcional.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "201",
+                            description = "Arquivo enviado com sucesso",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = Arquivo.class)
+                            )
+                    ),
+                    @ApiResponse(responseCode = "400", description = "Arquivo inválido ou requisição mal formada"),
+                    @ApiResponse(responseCode = "401", description = "Usuário não autenticado ou token inválido"),
+                    @ApiResponse(responseCode = "500", description = "Erro interno ao processar o upload")
+            }
+    )
+    @Tag(name = "Arquivos", description = "Endpoints para gerenciamento de arquivos")
     public ResponseEntity<Arquivo> upload(
+            @Parameter(
+                    description = "Arquivo a ser enviado",
+                    required = true,
+                    content = @Content(
+                            mediaType = MediaType.MULTIPART_FORM_DATA_VALUE,
+                            schema = @Schema(type = "string", format = "binary")
+                    )
+            )
             @RequestPart("file") MultipartFile file,
+
+            @Parameter(
+                    description = "Descrição opcional do arquivo"
+            )
             @RequestPart(value = "descricao", required = false) String descricao
     ) {
 

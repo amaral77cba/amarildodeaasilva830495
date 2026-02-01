@@ -30,6 +30,7 @@ public class AlbumImagemService {
     private ArquivoService arquivoService;
 
 
+    @Transactional
     public AlbumImagemResponseDTO adicionarImagem(Long idenAlbum, MultipartFile file, String descricao) {
 
         // 1. Buscar o álbum
