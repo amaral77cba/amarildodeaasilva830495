@@ -1,7 +1,9 @@
 package com.amarildo.seletivo.service;
 
 import com.amarildo.seletivo.model.Arquivo;
+import com.amarildo.seletivo.model.TipoAlbum;
 import com.amarildo.seletivo.model.dto.ArquivoPresignedUrlDTO;
+import com.amarildo.seletivo.model.dto.ArquivoResponseDTO;
 import com.amarildo.seletivo.repository.ArquivoRepository;
 import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.http.Method;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -138,4 +141,16 @@ public class ArquivoService {
     }
 
 
+    public List<ArquivoResponseDTO> listarTodos() {
+
+        return arquivoRepository.findAll()
+                .stream()
+                .map(arquivo -> new ArquivoResponseDTO(
+                        arquivo.getIdenArquivo(),
+                        arquivo.getUuidArquivo(),
+                        arquivo.getNomeArquivo()
+                ))
+                .toList();
+
+    }
 }

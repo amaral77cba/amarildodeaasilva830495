@@ -39,10 +39,7 @@ public class TipoAlbumResource {
                                     schema = @Schema(implementation = TipoAlbum.class)
                             )
                     ),
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Erro interno no servidor"
-                    )
+                    @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
             }
     )
     @Tag(name = "Tipo de Álbum", description = "Endpoints para gerenciamento de tipos de álbum")
@@ -65,10 +62,7 @@ public class TipoAlbumResource {
                                     schema = @Schema(implementation = TipoAlbum.class)
                             )
                     ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Tipo de álbum não encontrado"
-                    )
+                    @ApiResponse(responseCode = "404", description = "Tipo de álbum não encontrado")
             }
     )
     @Tag(name = "Tipo de Álbum", description = "Endpoints para gerenciamento de tipos de álbum")
@@ -89,18 +83,9 @@ public class TipoAlbumResource {
                                     schema = @Schema(implementation = TipoAlbum.class)
                             )
                     ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Tipo de álbum não encontrado"
-                    ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "Dados inválidos na requisição"
-                    ),
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Erro interno no servidor"
-                    )
+                    @ApiResponse(responseCode = "404", description = "Tipo de álbum não encontrado"),
+                    @ApiResponse(responseCode = "400", description = "Dados inválidos na requisição"),
+                    @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
             }
     )
     @Tag(name = "Tipo de Álbum", description = "Endpoints para gerenciamento de tipos de álbum")
@@ -139,10 +124,7 @@ public class TipoAlbumResource {
                                     schema = @Schema(implementation = TipoAlbum.class)
                             )
                     ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "Dados inválidos ou mal formatados"
-                    )
+                    @ApiResponse(responseCode = "400", description = "Dados inválidos ou mal formatados")
             }
     )
     @Tag(name = "Tipo de Álbum", description = "Endpoints para gerenciamento de tipos de álbum")

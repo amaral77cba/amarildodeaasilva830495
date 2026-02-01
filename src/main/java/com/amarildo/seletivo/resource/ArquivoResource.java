@@ -1,11 +1,19 @@
 package com.amarildo.seletivo.resource;
 
 import com.amarildo.seletivo.model.Arquivo;
+import com.amarildo.seletivo.model.TipoAlbum;
 import com.amarildo.seletivo.model.dto.ArquivoPresignedUrlDTO;
+import com.amarildo.seletivo.model.dto.ArquivoResponseDTO;
 import com.amarildo.seletivo.service.ArquivoService;
 import com.amarildo.seletivo.service.ArquivoStorageService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.core.io.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -40,23 +49,61 @@ public class ArquivoResource {
 
     //Gera URL temporaria para download
     @GetMapping("/download/{uuid}")
+    @Operation(
+            summary = "Gerar URL temporária para download de arquivo",
+            description = "Gera uma URL temporária para download de um arquivo armazenado, válida por um período em minutos",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "URL de download gerada com sucesso",
+                            content = @Content(
+                                    mediaType = "text/plain",
+                                    schema = @Schema(
+                                            example = "https://minio.exemplo.com/bucket/arquivo.pdf?X-Amz-Expires=600"
+                                    )
+                            )
+                    ),
+                    @ApiResponse(responseCode = "404", description = "Arquivo não encontrado"),
+                    @ApiResponse(responseCode = "400", description = "Parâmetros inválidos"),
+                    @ApiResponse(responseCode = "500", description = "Erro interno ao gerar URL de download")
+            }
+    )
+    @Tag(name = "Arquivos", description = "Endpoints para gerenciamento de arquivos")
     public ResponseEntity<String> gerarUrlDownload(
+            @Parameter(
+                    description = "UUID do arquivo",
+                    example = "575786b0-4f9e-4d2b-9f2c-123456789abc",
+                    required = true
+            )
             @PathVariable UUID uuid,
+            @Parameter(
+                    description = "Tempo de validade da URL em minutos",
+                    example = "10"
+            )
             @RequestParam(defaultValue = "10") int minutos
     ) {
 
         String url = arquivoStorageService.gerarUrlDownload(uuid, minutos);
         return ResponseEntity.ok(url);
+
     }
 
-    //Remove arquivo(MinIO e Banco)
-//    @DeleteMapping("/{idenArquivo}")
-//    public ResponseEntity<Void> remover(@PathVariable Long idenArquivo) {
-//        arquivoStorageService.remover(idenArquivo);
-//        return ResponseEntity.noContent().build();
-//    }
-
     @GetMapping("/{uuid}/download")
+    @Operation(
+            summary = "Realiza o download do arquivo",
+            description = "Efetua o download direto do arquivo identificado pelo UUID, retornando o conteúdo como stream."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Arquivo retornado com sucesso",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE
+                    )
+            ),
+            @ApiResponse(responseCode = "404", description = "Arquivo não encontrado")
+    })
+    @Tag(name = "Arquivos", description = "Endpoints para gerenciamento de arquivos")
     public ResponseEntity<Resource> download(@PathVariable UUID uuid) {
 
         Arquivo arquivo = arquivoService.buscarPorUuid(uuid);
@@ -71,7 +118,28 @@ public class ArquivoResource {
     }
 
     @GetMapping("/download/id/{idenArquivo}")
-    public ResponseEntity<Resource> downloadPorId(@PathVariable Long idenArquivo) {
+    @Operation(
+            summary = "Realiza o download do arquivo pelo ID",
+            description = "Efetua o download direto do arquivo identificado pelo ID interno do sistema."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Arquivo retornado com sucesso",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE
+                    )
+            ),
+            @ApiResponse(responseCode = "404", description = "Arquivo não encontrado")
+    })
+    @Tag(name = "Arquivos", description = "Endpoints para gerenciamento de arquivos")
+    public ResponseEntity<Resource> downloadPorId(
+            @Parameter(
+                    description = "Identificador interno do arquivo",
+                    example = "1",
+                    required = true
+            )
+            @PathVariable Long idenArquivo) {
 
         Arquivo arquivo = arquivoService.buscarPorId(idenArquivo);
 
@@ -87,12 +155,29 @@ public class ArquivoResource {
 
     @GetMapping("/{uuid}/link")
     @Operation(
-            summary = "Gera link pré-assinado para download",
-            description = "Retorna uma URL temporária para download do arquivo com expiração de 30 minutos"
+            summary = "Gerar link pré-assinado para download de arquivo",
+            description = "Gera e retorna uma URL temporária para download de um arquivo armazenado, com tempo de expiração definido pela aplicação"
     )
-    @ApiResponse(responseCode = "200", description = "Link gerado com sucesso")
-    @ApiResponse(responseCode = "404", description = "Arquivo não encontrado")
-    public ResponseEntity<ArquivoPresignedUrlDTO> gerarLinkDownload(@PathVariable UUID uuid) {
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Link de download gerado com sucesso",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ArquivoPresignedUrlDTO.class)
+                    )
+            ),
+            @ApiResponse(responseCode = "404", description = "Arquivo não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro interno ao gerar o link de download")
+    })
+    @Tag(name = "Arquivos", description = "Endpoints para gerenciamento de arquivos")
+    public ResponseEntity<ArquivoPresignedUrlDTO> gerarLinkDownload(
+            @Parameter(
+                    description = "UUID do arquivo",
+                    example = "575786b0-4f9e-4d2b-9f2c-123456789abc",
+                    required = true
+            )
+            @PathVariable UUID uuid) {
 
         return ResponseEntity.ok(
                 arquivoService.gerarLinkDownload(uuid)
@@ -100,4 +185,24 @@ public class ArquivoResource {
     }
 
 
+    @GetMapping
+    @Operation(
+            summary = "Listar todos os arquivos",
+            description = "Retorna uma lista com todos os arquivos cadastrados, contendo apenas os dados básicos do arquivo"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Lista de arquivos retornada com sucesso",
+            content = @Content(
+                    mediaType = "application/json",
+                    array = @ArraySchema(schema = @Schema(implementation = ArquivoResponseDTO.class))
+            )
+    )
+    @ApiResponse(responseCode = "204", description = "Nenhum arquivo encontrado"
+    )
+    @Tag(name = "Arquivos", description = "Endpoints para gerenciamento de arquivos")
+    public ResponseEntity<List<ArquivoResponseDTO>> listarTodos() {
+        List<ArquivoResponseDTO> arquivos = arquivoService.listarTodos();
+        return ResponseEntity.ok(arquivos);
+    }
 }

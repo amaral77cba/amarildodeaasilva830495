@@ -34,14 +34,8 @@ public class ArtistaResourceV2 {
                                     schema = @Schema(implementation = Artista.class)
                             )
                     ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "Dados inválidos para requisição"
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Artista não encontrado"
-                    )
+                    @ApiResponse(responseCode = "400", description = "Dados inválidos para requisição"),
+                    @ApiResponse(responseCode = "404", description = "Artista não encontrado")
             }
     )
     @Tag(name = "Artistas", description = "Endpoints para gerenciamento de artistas")

@@ -63,10 +63,7 @@ public class ArtistaResourceV1 {
                                     schema = @Schema(implementation = Artista.class)
                             )
                     ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Artista não encontrado"
-                    )
+                    @ApiResponse(responseCode = "404", description = "Artista não encontrado")
             }
     )
     @Tag(name = "Artistas", description = "Endpoints para gerenciamento de artistas")
@@ -96,10 +93,7 @@ public class ArtistaResourceV1 {
                                     )
                             )
                     ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "Tipo de artista inválido"
-                    )
+                    @ApiResponse(responseCode = "400", description = "Tipo de artista inválido")
             }
     )
     @Tag(name = "Artistas", description = "Endpoints para gerenciamento de artistas")
@@ -127,14 +121,8 @@ public class ArtistaResourceV1 {
                                     schema = @Schema(implementation = Artista.class)
                             )
                     ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "Dados inválidos na requisição"
-                    ),
-                    @ApiResponse(
-                            responseCode = "409",
-                            description = "Artista já existente com o mesmo nome"
-                    )
+                    @ApiResponse(responseCode = "400", description = "Dados inválidos na requisição"),
+                    @ApiResponse(responseCode = "409", description = "Artista já existente com o mesmo nome")
             }
     )
     @Tag(name = "Artistas", description = "Endpoints para gerenciamento de artistas")
@@ -173,14 +161,8 @@ public class ArtistaResourceV1 {
                                     schema = @Schema(implementation = Artista.class)
                             )
                     ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "Dados inválidos na requisição"
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Artista não encontrado"
-                    )
+                    @ApiResponse(responseCode = "400", description = "Dados inválidos na requisição"),
+                    @ApiResponse(responseCode = "404", description = "Artista não encontrado")
             }
     )
     @Tag(name = "Artistas", description = "Endpoints para gerenciamento de artistas")
