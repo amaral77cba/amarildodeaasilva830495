@@ -2,6 +2,7 @@ package com.amarildo.seletivo.config;
 
 import com.amarildo.seletivo.security.JwtAuthenticationEntryPoint;
 import com.amarildo.seletivo.security.JwtAuthenticationFilter;
+import com.amarildo.seletivo.security.RateLimitFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,9 @@ public class SecurityConfig {
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+    @Autowired
+    private RateLimitFilter rateLimitFilter;
 
     @Value("${security.jwt.enabled:true}")
     private boolean jwtEnabled;
@@ -45,6 +49,7 @@ public class SecurityConfig {
                             ).permitAll()
                             .anyRequest().authenticated()
                     )
+                    .addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class)
                     .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         //} else {
         //    http
