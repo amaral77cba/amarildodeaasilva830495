@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Tag(name = "Regionais", description = "Endpoint de sincronizacao e consulta de regionais")
 @RestController
 @RequestMapping("/api/v1/regionais")
 public class RegionalResource {
@@ -39,7 +40,6 @@ public class RegionalResource {
                     @ApiResponse(responseCode = "500", description = "Erro interno durante o processo de sincronização")
             }
     )
-    @Tag(name = "Regionais", description = "Endpoint de sincronizacao e consulta de regionais")
     public ResponseEntity<Void> sincronizar() {
         regionalService.sincronizarRegionais();
         return ResponseEntity.ok().build();
@@ -64,7 +64,6 @@ public class RegionalResource {
                     @ApiResponse(responseCode = "500", description = "Erro interno ao buscar regionais")
             }
     )
-    @Tag(name = "Regionais", description = "Endpoint de sincronizacao e consulta de regionais")
     public ResponseEntity<List<Regional>> listar() {
         return ResponseEntity.ok(regionalService.listarAtivas());
     }

@@ -16,13 +16,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+@Tag(name = "Imagens dos Álbuns", description = "Endpoints para gerenciamento de álbuns e suas imagens")
 @RestController
 @RequestMapping("/api/v1/albuns")
 public class AlbumImagemResource {
 
     @Autowired
     private AlbumImagemService albumImagemService;
-
 
     @PostMapping(value = "/{idenAlbum}/imagens", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(
@@ -43,7 +43,6 @@ public class AlbumImagemResource {
                     @ApiResponse(responseCode = "404", description = "Álbum não encontrado")
             }
     )
-    @Tag(name = "Imagens dos Álbuns", description = "Endpoints para gerenciamento de álbuns e suas imagens")
     public ResponseEntity<AlbumImagemResponseDTO> adicionarImagem(
 
             @Parameter(

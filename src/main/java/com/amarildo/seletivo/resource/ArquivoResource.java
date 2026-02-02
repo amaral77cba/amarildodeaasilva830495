@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.UUID;
 
+@Tag(name = "Arquivos", description = "Endpoints para gerenciamento de arquivos")
 @RestController
 @RequestMapping("/api/v1/arquivos")
 public class ArquivoResource {
@@ -57,7 +58,6 @@ public class ArquivoResource {
                     @ApiResponse(responseCode = "500", description = "Erro interno ao processar o upload")
             }
     )
-    @Tag(name = "Arquivos", description = "Endpoints para gerenciamento de arquivos")
     public ResponseEntity<Arquivo> upload(
             @Parameter(
                     description = "Arquivo a ser enviado",
@@ -100,7 +100,6 @@ public class ArquivoResource {
                     @ApiResponse(responseCode = "500", description = "Erro interno ao gerar URL de download")
             }
     )
-    @Tag(name = "Arquivos", description = "Endpoints para gerenciamento de arquivos")
     public ResponseEntity<String> gerarUrlDownload(
             @Parameter(
                     description = "UUID do arquivo",
@@ -135,7 +134,6 @@ public class ArquivoResource {
             ),
             @ApiResponse(responseCode = "404", description = "Arquivo não encontrado")
     })
-    @Tag(name = "Arquivos", description = "Endpoints para gerenciamento de arquivos")
     public ResponseEntity<Resource> download(@PathVariable UUID uuid) {
 
         Arquivo arquivo = arquivoService.buscarPorUuid(uuid);
@@ -164,7 +162,6 @@ public class ArquivoResource {
             ),
             @ApiResponse(responseCode = "404", description = "Arquivo não encontrado")
     })
-    @Tag(name = "Arquivos", description = "Endpoints para gerenciamento de arquivos")
     public ResponseEntity<Resource> downloadPorId(
             @Parameter(
                     description = "Identificador interno do arquivo",
@@ -202,7 +199,6 @@ public class ArquivoResource {
             @ApiResponse(responseCode = "404", description = "Arquivo não encontrado"),
             @ApiResponse(responseCode = "500", description = "Erro interno ao gerar o link de download")
     })
-    @Tag(name = "Arquivos", description = "Endpoints para gerenciamento de arquivos")
     public ResponseEntity<ArquivoPresignedUrlDTO> gerarLinkDownload(
             @Parameter(
                     description = "UUID do arquivo",
@@ -232,7 +228,6 @@ public class ArquivoResource {
     )
     @ApiResponse(responseCode = "204", description = "Nenhum arquivo encontrado"
     )
-    @Tag(name = "Arquivos", description = "Endpoints para gerenciamento de arquivos")
     public ResponseEntity<List<ArquivoResponseDTO>> listarTodos() {
         List<ArquivoResponseDTO> arquivos = arquivoService.listarTodos();
         return ResponseEntity.ok(arquivos);

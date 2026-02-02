@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Artistas", description = "Endpoints para gerenciamento de artistas")
 @RestController
 @RequestMapping("/api/v2/artistas")
 public class ArtistaResourceV2 {
@@ -38,7 +39,6 @@ public class ArtistaResourceV2 {
                     @ApiResponse(responseCode = "404", description = "Artista não encontrado")
             }
     )
-    @Tag(name = "Artistas", description = "Endpoints para gerenciamento de artistas")
     public ResponseEntity<Artista> atualizarV2(
             @Parameter(
                     description = "Identificador do artista",

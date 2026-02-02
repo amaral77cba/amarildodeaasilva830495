@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Álbuns", description = "Endpoints para gerenciamento de álbuns")
 @RestController
 @RequestMapping("/api/v1/albuns")
 public class AlbumResource {
@@ -51,7 +52,6 @@ public class AlbumResource {
                     @ApiResponse(responseCode = "204", description = "Nenhum álbum encontrado")
             }
     )
-    @Tag(name = "Álbuns", description = "Endpoints para gerenciamento de álbuns")
     public ResponseEntity<List<AlbumResponseDTO>> listarTodos() {
         return ResponseEntity.ok(albumService.listarTodos());
     }
@@ -72,7 +72,6 @@ public class AlbumResource {
                     @ApiResponse(responseCode = "404", description = "Álbum não encontrado")
             }
     )
-    @Tag(name = "Álbuns", description = "Endpoints para gerenciamento de álbuns")
     public ResponseEntity<AlbumResponseDTO> buscarPorId(
             @Parameter(
                     description = "Identificador do álbum",
@@ -99,7 +98,6 @@ public class AlbumResource {
                     @ApiResponse(responseCode = "404", description = "Tipo de álbum não encontrado")
             }
     )
-    @Tag(name = "Álbuns", description = "Endpoints para gerenciamento de álbuns")
     public ResponseEntity<List<AlbumResponseDTO>> listarPorTipo(
             @Parameter(
                     description = "Identificador do tipo de álbum",
@@ -127,7 +125,6 @@ public class AlbumResource {
                     @ApiResponse(responseCode = "400", description = "Dados inválidos na requisição")
             }
     )
-    @Tag(name = "Álbuns", description = "Endpoints para gerenciamento de álbuns")
     public ResponseEntity<AlbumResponseDTO> criar(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Dados necessários para criação do álbum",
@@ -171,7 +168,6 @@ public class AlbumResource {
                     @ApiResponse(responseCode = "404", description = "Álbum não encontrado")
             }
     )
-    @Tag(name = "Álbuns", description = "Endpoints para gerenciamento de álbuns")
     public ResponseEntity<AlbumResponseDTO> atualizar(
             @Parameter(
                     description = "Identificador do álbum a ser atualizado",
@@ -208,7 +204,6 @@ public class AlbumResource {
                     )
             }
     )
-    @Tag(name = "Álbuns", description = "Endpoints para gerenciamento de álbuns")
     public ResponseEntity<Page<AlbumResponseDTO>> listarPaginado(
             @ParameterObject
             @PageableDefault(size = 10, page = 0)

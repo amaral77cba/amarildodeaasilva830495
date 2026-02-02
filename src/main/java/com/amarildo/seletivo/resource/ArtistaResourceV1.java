@@ -22,6 +22,7 @@ import jakarta.validation.Valid;
 
 import java.util.List;
 
+@Tag(name = "Artistas", description = "Endpoints para gerenciamento de artistas")
 @RestController
 @RequestMapping("/api/v1/artistas")
 public class ArtistaResourceV1 {
@@ -45,7 +46,6 @@ public class ArtistaResourceV1 {
                     @ApiResponse(responseCode = "204", description = "Nenhum artista encontrado")
             }
     )
-    @Tag(name = "Artistas", description = "Endpoints para gerenciamento de artistas")
     public ResponseEntity<List<Artista>> listarTodos() {
         return ResponseEntity.ok(artistaService.listarTodos());
     }
@@ -66,7 +66,6 @@ public class ArtistaResourceV1 {
                     @ApiResponse(responseCode = "404", description = "Artista não encontrado")
             }
     )
-    @Tag(name = "Artistas", description = "Endpoints para gerenciamento de artistas")
     public ResponseEntity<Artista> buscarPorId(
             @Parameter(
                     description = "Identificador do artista",
@@ -96,7 +95,6 @@ public class ArtistaResourceV1 {
                     @ApiResponse(responseCode = "400", description = "Tipo de artista inválido")
             }
     )
-    @Tag(name = "Artistas", description = "Endpoints para gerenciamento de artistas")
     public ResponseEntity<List<Artista>> listarPorTipo(
             @Parameter(
                     description = "Tipo do artista",
@@ -125,7 +123,6 @@ public class ArtistaResourceV1 {
                     @ApiResponse(responseCode = "409", description = "Artista já existente com o mesmo nome")
             }
     )
-    @Tag(name = "Artistas", description = "Endpoints para gerenciamento de artistas")
     public ResponseEntity<Artista> criar(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Dados do artista a ser criado",
@@ -165,7 +162,6 @@ public class ArtistaResourceV1 {
                     @ApiResponse(responseCode = "404", description = "Artista não encontrado")
             }
     )
-    @Tag(name = "Artistas", description = "Endpoints para gerenciamento de artistas")
     public ResponseEntity<Artista> atualizar(
             @Parameter(
                     description = "Identificador do artista",

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Tipo de Álbum", description = "Endpoints para gerenciamento de tipos de álbum")
 @RestController
 @RequestMapping("/api/v1/tipos-album")
 public class TipoAlbumResource {
@@ -42,7 +43,6 @@ public class TipoAlbumResource {
                     @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
             }
     )
-    @Tag(name = "Tipo de Álbum", description = "Endpoints para gerenciamento de tipos de álbum")
     @GetMapping
     public ResponseEntity<List<TipoAlbum>> listarTodos() {
         List<TipoAlbum> tipos = tipoAlbumService.listarTodos();
@@ -65,7 +65,6 @@ public class TipoAlbumResource {
                     @ApiResponse(responseCode = "404", description = "Tipo de álbum não encontrado")
             }
     )
-    @Tag(name = "Tipo de Álbum", description = "Endpoints para gerenciamento de tipos de álbum")
     public ResponseEntity<TipoAlbum> buscarPorId(@PathVariable Long idenTipoAlbum) {
         TipoAlbum tipoAlbum = tipoAlbumService.buscarPorId(idenTipoAlbum);
         return ResponseEntity.ok(tipoAlbum);
@@ -88,7 +87,6 @@ public class TipoAlbumResource {
                     @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
             }
     )
-    @Tag(name = "Tipo de Álbum", description = "Endpoints para gerenciamento de tipos de álbum")
     @PutMapping("/{idenTipoAlbum}")
     public ResponseEntity<TipoAlbum> atualizar(
             @Parameter(
@@ -127,7 +125,6 @@ public class TipoAlbumResource {
                     @ApiResponse(responseCode = "400", description = "Dados inválidos ou mal formatados")
             }
     )
-    @Tag(name = "Tipo de Álbum", description = "Endpoints para gerenciamento de tipos de álbum")
     @PostMapping
     public ResponseEntity<TipoAlbum> salvar(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(

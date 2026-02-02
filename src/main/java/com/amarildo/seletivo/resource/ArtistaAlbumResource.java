@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Artista x Álbum", description = "Endpoints para gerenciamento do vínculo entre artistas e álbuns")
 @RestController
 @RequestMapping("api/v1/artistas-albuns")
 public class ArtistaAlbumResource {
@@ -49,7 +50,6 @@ public class ArtistaAlbumResource {
             ),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
-    @Tag(name = "Artista x Álbum", description = "Endpoints para gerenciamento do vínculo entre artistas e álbuns")
     @GetMapping
     public ResponseEntity<List<ArtistaAlbumListDTO>> listarTodos() {
 
@@ -74,7 +74,6 @@ public class ArtistaAlbumResource {
                     @ApiResponse(responseCode = "401", description = "Usuário não autenticado ou token inválido")
             }
     )
-    @Tag(name = "Artista x Álbum", description = "Endpoints para gerenciamento do vínculo entre artistas e álbuns")
     public ResponseEntity<ArtistaAlbumListDTO> buscarPorId(
             @Parameter(
                     description = "Identificador do vínculo artista–álbum",
@@ -103,7 +102,6 @@ public class ArtistaAlbumResource {
             @ApiResponse(responseCode = "401", description = "Não autorizado - Token JWT ausente, inválido ou expirado"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
-    @Tag(name = "Artista x Álbum", description = "Endpoints para gerenciamento do vínculo entre artistas e álbuns")
     @PostMapping
     public ResponseEntity<ArtistaAlbumResponseDTO> salvar(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -142,7 +140,6 @@ public class ArtistaAlbumResource {
             @ApiResponse(responseCode = "401", description = "Não autorizado - Token JWT ausente, inválido ou expirado"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
-    @Tag(name = "Artista x Álbum", description = "Endpoints para gerenciamento do vínculo entre artistas e álbuns")
     public ResponseEntity<List<ArtistaAlbumListDTO>> listarPorTipo(
             @Parameter(
                     description = "Tipo do artista",
@@ -172,7 +169,6 @@ public class ArtistaAlbumResource {
             @ApiResponse(responseCode = "401", description = "Não autorizado - Token JWT ausente, inválido ou expirado"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
-    @Tag(name = "Artista x Álbum", description = "Endpoints para gerenciamento do vínculo entre artistas e álbuns")
     @GetMapping("/consulta")
     public ResponseEntity<List<ArtistaAlbumListDTO>> consultar(
                                                                 @Parameter(

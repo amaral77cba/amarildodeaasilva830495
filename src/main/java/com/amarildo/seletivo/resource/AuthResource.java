@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+
+@Tag(name = "Autenticação", description = "Endpoints de login, refresh e autenticação JWT")
 @RestController
 public class AuthResource {
 
@@ -42,7 +44,6 @@ public class AuthResource {
                     @ApiResponse(responseCode = "400", description = "Requisição inválida")
             }
     )
-    @Tag(name = "Autenticação", description = "Endpoint de autenticação e geração de token JWT")
     public ResponseEntity<?> login(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Credenciais do usuário",
@@ -101,7 +102,6 @@ public class AuthResource {
                     @ApiResponse(responseCode = "401", description = "Refresh token inválido ou expirado")
             }
     )
-    @Tag(name = "Autenticação", description = "Endpoint de renovação de token JWT")
     public ResponseEntity<?> refresh(@CookieValue(value = "refreshToken", required = false) String refreshToken) {
 
         if (refreshToken == null) {
