@@ -33,6 +33,21 @@ services:
     networks:
       - postgres_net
 
+  app:
+    build: .
+    container_name: seletivo-api
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - minio
+    ports:
+      - "8080:8080"
+    environment:
+          SPRING_PROFILES_ACTIVE: docker
+    env_file:
+      - .env
+    networks:
+      - postgres_net
 
 volumes:
   pgdata_postgres17:
