@@ -105,12 +105,46 @@ public class MinioService {
         }
     }
 
-    public void upload(String objectName,
+//    public void upload(String objectName,
+//                       InputStream inputStream,
+//                       String contentType,
+//                       long size) {
+//
+//        try {
+//            minioClient.putObject(
+//                    PutObjectArgs.builder()
+//                            .bucket(bucket)
+//                            .object(objectName)
+//                            .stream(inputStream, size, -1)
+//                            .contentType(contentType)
+//                            .build()
+//            );
+//        } catch (Exception e) {
+//            throw new RuntimeException("Erro ao enviar arquivo para o MinIO", e);
+//        }
+//    }
+
+    public void upload(String bucket,
+                       String objectName,
                        InputStream inputStream,
                        String contentType,
                        long size) {
 
         try {
+            boolean exists = minioClient.bucketExists(
+                    BucketExistsArgs.builder()
+                            .bucket(bucket)
+                            .build()
+            );
+
+            if (!exists) {
+                minioClient.makeBucket(
+                        MakeBucketArgs.builder()
+                                .bucket(bucket)
+                                .build()
+                );
+            }
+
             minioClient.putObject(
                     PutObjectArgs.builder()
                             .bucket(bucket)
@@ -119,10 +153,12 @@ public class MinioService {
                             .contentType(contentType)
                             .build()
             );
+
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao enviar arquivo para o MinIO", e);
+            throw new RuntimeException("Erro ao enviar arquivo ao MinIO", e);
         }
     }
+
 
 
 }

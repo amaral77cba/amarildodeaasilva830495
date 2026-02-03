@@ -78,9 +78,13 @@ public class ArquivoService {
             // 1. Gerar UUID
             UUID uuid = UUID.randomUUID();
 
+            //System.out.println("###Ponto1_1: " + uuid);
+
             // 2. Extrair dados do arquivo
             String nomeOriginal = file.getOriginalFilename();
             String extensao = "";
+
+            //System.out.println("###Ponto1_2: " + nomeOriginal);
 
             if (nomeOriginal != null && nomeOriginal.contains(".")) {
                 extensao = nomeOriginal.substring(nomeOriginal.lastIndexOf("."));
@@ -90,14 +94,18 @@ public class ArquivoService {
             String bucket = "bancoseletivo-arquivos"; //"album-imagens"; //
             String objectName = uuid + extensao;
 
+            //System.out.println("###Ponto1_3: " + objectName);
+
             // 4. Upload no MinIO
             minioService.upload(
-                    //bucket,
+                    bucket,
                     objectName,
                     file.getInputStream(),
                     file.getContentType(),
                     file.getSize()
             );
+
+            //System.out.println("###Ponto1_4: ");
 
             // 5. Persistir metadados
             Arquivo arquivo = new Arquivo();
@@ -108,6 +116,8 @@ public class ArquivoService {
             arquivo.setBucket(bucket);
             arquivo.setObjectName(objectName);
             arquivo.setTamanhoBytes(file.getSize());
+
+            //System.out.println("###Ponto1_5: ");
 
             return arquivoRepository.save(arquivo);
 

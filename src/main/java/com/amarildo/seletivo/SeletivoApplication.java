@@ -10,7 +10,9 @@ public class SeletivoApplication {
 		SpringApplication.run(SeletivoApplication.class, args);
 
 		System.out.println(" ");
-		System.out.println("TesteAplicacao");
+		System.out.println("AplicacaoRodando");
+		System.out.println(" ");
+
 	}
 
 }

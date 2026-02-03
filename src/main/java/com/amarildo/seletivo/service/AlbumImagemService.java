@@ -37,14 +37,20 @@ public class AlbumImagemService {
         Album album = albumRepository.findById(idenAlbum)
                 .orElseThrow(() -> new EntityNotFoundException("Álbum não encontrado"));
 
+        //System.out.println("###Ponto1: " + idenAlbum);
+
         // 2. Salvar o arquivo (MinIO + tabela ARQUIVO)
         Arquivo arquivo = arquivoService.salvarArquivo(file);
+
+        //System.out.println("###Ponto2: " + arquivo.getIdenArquivo());
 
         // 3. Criar vínculo Album_Imagem
         AlbumImagem albumImagem = new AlbumImagem();
         albumImagem.setAlbum(album);
         albumImagem.setArquivo(arquivo);
         albumImagem.setDataAlbumImagem(OffsetDateTime.now());
+
+        //System.out.println("###Ponto3: ");
 
         // 4. Persistir
         albumImagem = albumImagemRepository.save(albumImagem);
