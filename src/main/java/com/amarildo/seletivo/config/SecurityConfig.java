@@ -22,42 +22,31 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    @Autowired
-    private RateLimitFilter rateLimitFilter;
-
     @Value("${security.jwt.enabled:true}")
     private boolean jwtEnabled;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        //http.csrf(csrf -> csrf.disable());
+        http
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/api/v1/login",
+                                "/api/v1/refresh",
 
-        //if (jwtEnabled) {
+                                // LIBERAR TUDO DO SWAGGER (HTML, CSS, JS)
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
 
-            http
-                    .csrf(csrf -> csrf.disable())
-                    .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                    .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
-                    .authorizeHttpRequests(auth -> auth
-                            .requestMatchers(
-                                    "/api/v1/login",
-                                    "/api/v1/refresh",
-                                    "/v3/api-docs/**",
-                                    "/swagger-ui/**",
-                                    "/swagger-ui.html",
-                                    "/ws/**"
-                            ).permitAll()
-                            .anyRequest().authenticated()
-                    )
-                    .addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class)
-                    .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        //} else {
-        //    http
-        //            .authorizeHttpRequests(auth -> auth
-        //                    .anyRequest().permitAll()
-        //            );
-        //}
+                                // LIBERAR A DOCUMENTAÇÃO JSON
+                                "/v3/api-docs/**"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

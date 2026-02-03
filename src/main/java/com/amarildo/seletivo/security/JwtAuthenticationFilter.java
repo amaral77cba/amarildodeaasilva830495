@@ -26,25 +26,36 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
+
+//        System.out.println("### shouldNotFilter | path = " + path);
+//        boolean skip = path.startsWith("/swagger-ui")
+//                || path.startsWith("/v3/api-docs")
+//                || path.equals("/swagger-ui.html")
+//                || path.startsWith("/api/v1/login")
+//                || path.startsWith("/api/v1/refresh");
+//        System.out.println("### shouldNotFilter | skip = " + skip);
+
         return path.startsWith("/swagger-ui")
                 || path.startsWith("/v3/api-docs")
                 || path.equals("/swagger-ui.html")
-                || path.equals("/login")
-                || path.equals("/refresh-token")
-                || path.startsWith("/ws");
+                || path.startsWith("/api/v1/login")
+                || path.startsWith("/api/v1/refresh");
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        try {
+        //try {
+            //System.out.println("### JwtAuthenticationFilter EXECUTANDO: " + request.getRequestURI());
             String authHeader = request.getHeader("Authorization");
+            //System.out.println("### Authorization header: " + authHeader);
 
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
 
                 String jwt = authHeader.substring(7);
 
                 String username = jwtUtil.extrairUsername(jwt);
+                //System.out.println("### JWT username extraído: " + username);
 
                 if (jwtUtil.validarToken(jwt, username)) {
 
@@ -61,14 +72,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
 
-        } catch (Exception ex) {
+        //} catch (Exception ex) {
 
-            SecurityContextHolder.clearContext();
-            authenticationEntryPoint.commence(request, response,
-                    new org.springframework.security.authentication.InsufficientAuthenticationException(
-                            "Token inválido ou expirado"
-                    )
-            );
-        }
+        //    SecurityContextHolder.clearContext();
+        //    authenticationEntryPoint.commence(request, response,
+        //            new org.springframework.security.authentication.InsufficientAuthenticationException(
+        //                    "Token inválido ou expirado"
+        //            )
+        //    );
+        //}
     }
 }
