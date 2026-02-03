@@ -11,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,9 @@ public class AlbumService {
 
     @Autowired
     private TipoAlbumRepository tipoAlbumRepository;
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
     public List<AlbumResponseDTO> listarTodos() {
         return albumRepository.findAll()
@@ -80,6 +84,17 @@ public class AlbumService {
         album.setTipoAlbum(tipoAlbum);
 
         Album salvo = albumRepository.save(album);
+
+        simpMessagingTemplate.convertAndSend(
+                "/topic/albums",
+                new AlbumResponseDTO(
+                        salvo.getIdenAlbum(),
+                        salvo.getDescricaoAlbum(),
+                        salvo.getTipoAlbum().getIdenTipoAlbum(),
+                        salvo.getTipoAlbum().getDescricaoTipoAlbum()
+                )
+        );
+        //System.out.println("###WebSocket do álbum " + simpMessagingTemplate.toString());
 
         return new AlbumResponseDTO(
                 salvo.getIdenAlbum(),

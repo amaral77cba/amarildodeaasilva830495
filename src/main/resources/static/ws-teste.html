@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+</head>
+<body>
+
+<h2>Notificacoes de Novos Albuns</h2>
+
+<ul id="messages"></ul>
+
+<script>
+    // Especifique a URL completa do seu servidor Spring Boot
+    const socket = new SockJS("http://localhost:8080/ws");
+    //const socket = new SockJS("/ws");
+    const stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function (frame) {
+        //console.log("Conectado com sucesso!");
+
+        stompClient.subscribe("/topic/albums", function (message) {
+            //console.log("Mensagem recebida: ", message.body);
+            const album = JSON.parse(message.body);
+
+            const li = document.createElement("li");
+            li.innerText = `Novo álbum cadastrado: ${album.idenAlbum} - ${album.descricaoAlbum} - ${album.descricaoTipoAlbum}`;
+            document.getElementById("messages").appendChild(li);
+        });
+    }, function (error) {
+        console.error("Erro na conexão STOMP:", error);
+    });
+</script>
+
+</body>
+</html>
