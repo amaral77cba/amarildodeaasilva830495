@@ -59,6 +59,7 @@ public class ArquivoStorageService {
 
     public String gerarUrlDownload(UUID uuidArquivo, int minutos) {
         Arquivo arquivo = arquivoService.buscarPorUuid(uuidArquivo);
+        System.out.println("###geraDownload");
         return minioService.gerarUrlDownload(arquivo.getObjectName(), minutos);
     }
 

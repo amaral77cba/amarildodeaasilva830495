@@ -113,7 +113,7 @@ public class ArquivoResource {
             )
             @RequestParam(defaultValue = "10") int minutos
     ) {
-
+        System.out.println("###_Aqui0302");
         String url = arquivoStorageService.gerarUrlDownload(uuid, minutos);
         return ResponseEntity.ok(url);
 
@@ -138,7 +138,9 @@ public class ArquivoResource {
 
         Arquivo arquivo = arquivoService.buscarPorUuid(uuid);
 
+        System.out.println("### uuid informado: " + uuid);
         Resource resource = arquivoService.download(arquivo);
+        System.out.println("### linkgerado para download: " + resource);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(arquivo.getContentType()))
