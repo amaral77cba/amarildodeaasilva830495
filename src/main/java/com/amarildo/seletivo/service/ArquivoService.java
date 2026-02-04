@@ -147,6 +147,7 @@ public class ArquivoService {
 
             // troca apenas o host
             //url = url.replace("http://minio:9000", "http://localhost:9000");
+            url = url.replace("http://minio:9000/", "http://localhost/minio/");
             System.out.println("###TrocadeURL");
 
             return new ArquivoPresignedUrlDTO(url, expiracaoMinutos);

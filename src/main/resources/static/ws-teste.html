@@ -11,16 +11,18 @@
 <ul id="messages"></ul>
 
 <script>
+    console.log("Caminho: ", window.location.origin);
     // Especifique a URL completa do seu servidor Spring Boot
-    const socket = new SockJS("http://localhost:8080/ws");
-    //const socket = new SockJS("/ws");
+    //const socket = new SockJS("http://localhost:8080/ws");    //para rodar local
+    const socket = new SockJS("/ws");
+    //const socket = new SockJS(window.location.origin + "/ws");
     const stompClient = Stomp.over(socket);
 
     stompClient.connect({}, function (frame) {
-        //console.log("Conectado com sucesso!");
+        console.log("Conectado com sucesso!");
 
         stompClient.subscribe("/topic/albums", function (message) {
-            //console.log("Mensagem recebida: ", message.body);
+            console.log("Mensagem recebida: ", message.body);
             const album = JSON.parse(message.body);
 
             const li = document.createElement("li");

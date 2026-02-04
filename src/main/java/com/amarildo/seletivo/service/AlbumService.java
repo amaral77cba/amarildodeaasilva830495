@@ -94,7 +94,8 @@ public class AlbumService {
                         salvo.getTipoAlbum().getDescricaoTipoAlbum()
                 )
         );
-        //System.out.println("###WebSocket do álbum " + simpMessagingTemplate.toString());
+        System.out.println("###WebSocket do álbum " + simpMessagingTemplate.toString());
+        System.out.println("###WebSocket do álbum dois: " + salvo.getDescricaoAlbum());
 
         return new AlbumResponseDTO(
                 salvo.getIdenAlbum(),

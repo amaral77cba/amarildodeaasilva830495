@@ -47,6 +47,14 @@ public class SecurityConfig {
                                 // ACTUATOR
                                 "/actuator/health",
                                 "/actuator/health/**"
+
+                                // WEBSOCKET
+                                //"/ws/**",
+                                //"/topic/**",
+
+                                // ARQUIVO DE TESTES
+                                //"/ws-teste.html",
+                                //"/**/*.html"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

@@ -72,7 +72,7 @@ public class MinioService {
     //Gera URL temporaria para download
     public String gerarUrlDownload(String objectName, int minutosExpiracao) {
         try {
-            return minioClient.getPresignedObjectUrl(
+            String url = minioClient.getPresignedObjectUrl(
                     GetPresignedObjectUrlArgs.builder()
                             .bucket(bucket)
                             .object(objectName)
@@ -80,6 +80,20 @@ public class MinioService {
                             .expiry(minutosExpiracao * 60)
                             .build()
             );
+            // troca apenas o host
+            url = url.replace("http://minio:9000/", "http://localhost/minio/");
+            System.out.println("###TrocadeURL_PontoDois");
+
+            return url;
+
+//            return minioClient.getPresignedObjectUrl(
+//                    GetPresignedObjectUrlArgs.builder()
+//                            .bucket(bucket)
+//                            .object(objectName)
+//                            .method(Method.GET)
+//                            .expiry(minutosExpiracao * 60)
+//                            .build()
+//            );
         } catch (Exception e) {
             throw new RuntimeException("Erro ao gerar URL de download", e);
         }
