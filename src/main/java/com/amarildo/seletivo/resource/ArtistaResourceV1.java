@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -102,8 +103,17 @@ public class ArtistaResourceV1 {
                     example = "BANDA",
                     schema = @Schema(implementation = TipoArtista.class)
             )
-            @PathVariable TipoArtista tipo) {
-        return ResponseEntity.ok(artistaService.listarPorTipo(tipo));
+            @PathVariable TipoArtista tipo,
+
+            @Parameter(
+                    description = "Direção da ordenação",
+                    example = "ASC",
+                    schema = @Schema(implementation = Sort.Direction.class)
+            )
+            @RequestParam(defaultValue = "ASC") Sort.Direction sortDirection
+
+            ) {
+        return ResponseEntity.ok(artistaService.listarPorTipo(tipo, sortDirection));
     }
 
     @PostMapping

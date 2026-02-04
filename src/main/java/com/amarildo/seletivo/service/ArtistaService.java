@@ -9,6 +9,7 @@ import com.amarildo.seletivo.repository.ArtistaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,8 +47,9 @@ public class ArtistaService {
         return artistaRepository.findAll();
     }
 
-    public List<Artista> listarPorTipo(TipoArtista tipoArtista) {
-        return artistaRepository.findByTipoArtista(tipoArtista);
+    public List<Artista> listarPorTipo(TipoArtista tipoArtista, Sort.Direction direction) {
+        Sort sort = Sort.by(direction, "nomeArtista");
+        return artistaRepository.findByTipoArtista(tipoArtista, sort);
     }
 
     public Artista atualizar(Long idenArtista, ArtistaUpdateDTO artistaAtualizado) {
