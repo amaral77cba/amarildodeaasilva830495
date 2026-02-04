@@ -42,7 +42,11 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
 
                                 // LIBERAR A DOCUMENTAÇÃO JSON
-                                "/v3/api-docs/**"
+                                "/v3/api-docs/**",
+
+                                // ACTUATOR
+                                "/actuator/health",
+                                "/actuator/health/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

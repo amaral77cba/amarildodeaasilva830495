@@ -81,7 +81,7 @@ public class ArtistaResourceV1 {
     @GetMapping("/tipo/{tipo}")
     @Operation(
             summary = "Listar artistas por tipo",
-            description = "Retorna a lista de artistas filtrados pelo tipo informado (BANDA ou CANTOR)",
+            description = "Retorna a lista de artistas filtrados pelo tipo informado (BANDA ou CANTOR), com ordenação",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
