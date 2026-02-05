@@ -129,12 +129,12 @@ public class ArquivoService {
 
     public ArquivoPresignedUrlDTO gerarLinkDownload(UUID uuid) {
 
-        System.out.println("###uuidANTES");
+        //System.out.println("###uuidANTES");
         Arquivo arquivo = arquivoRepository.findByUuidArquivo(uuid)
                 .orElseThrow(() ->
                         new EntityNotFoundException("Arquivo não encontrado"));
 
-        System.out.println("###uuid " + uuid + " arquivoencontrado: " + arquivo.getIdenArquivo());
+        //System.out.println("###uuid " + uuid + " arquivoencontrado: " + arquivo.getIdenArquivo());
         try {
             String url = minioClient.getPresignedObjectUrl(
                     GetPresignedObjectUrlArgs.builder()
@@ -146,14 +146,13 @@ public class ArquivoService {
             );
 
             // troca apenas o host
-            //url = url.replace("http://minio:9000", "http://localhost:9000");
             url = url.replace("http://minio:9000/", "http://localhost/minio/");
-            System.out.println("###TrocadeURL");
+            //System.out.println("###TrocadeURL");
 
             return new ArquivoPresignedUrlDTO(url, expiracaoMinutos);
 
         } catch (Exception e) {
-            System.out.println("###ErroPre-assinatura");
+            //System.out.println("###ErroPre-assinatura");
             throw new RuntimeException("Erro ao gerar link pré-assinado", e);
         }
     }

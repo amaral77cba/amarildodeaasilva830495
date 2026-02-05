@@ -92,17 +92,4 @@ public class AlbumImagemService {
                 .findByAlbum_IdenAlbumOrderByDataAlbumImagemAsc(idenAlbum);
     }
 
-
-//    public void removerImagem(Long idenAlbumImagem) {
-//
-//        AlbumImagem albumImagem = albumImagemRepository.findById(idenAlbumImagem)
-//                .orElseThrow(() -> new EntityNotFoundException("Imagem não encontrada"));
-//
-//        // Remove vínculo
-//        albumImagemRepository.delete(albumImagem);
-//
-//        // Remove arquivo (MinIO + tabela ARQUIVO)
-//        arquivoService.removerArquivo(albumImagem.getArquivo());
-//    }
-
 }

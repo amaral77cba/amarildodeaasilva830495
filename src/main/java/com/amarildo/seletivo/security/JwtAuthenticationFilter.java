@@ -27,14 +27,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
 
-//        System.out.println("### shouldNotFilter | path = " + path);
-//        boolean skip = path.startsWith("/swagger-ui")
-//                || path.startsWith("/v3/api-docs")
-//                || path.equals("/swagger-ui.html")
-//                || path.startsWith("/api/v1/login")
-//                || path.startsWith("/api/v1/refresh");
-//        System.out.println("### shouldNotFilter | skip = " + skip);
-
         return path.startsWith("/swagger-ui")
                 || path.startsWith("/v3/api-docs")
                 || path.equals("/swagger-ui.html")
@@ -46,41 +38,32 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        //try {
-            //System.out.println("### JwtAuthenticationFilter EXECUTANDO: " + request.getRequestURI());
-            String authHeader = request.getHeader("Authorization");
-            //System.out.println("### Authorization header: " + authHeader);
 
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+        //System.out.println("### JwtAuthenticationFilter EXECUTANDO: " + request.getRequestURI());
+        String authHeader = request.getHeader("Authorization");
+        //System.out.println("### Authorization header: " + authHeader);
 
-                String jwt = authHeader.substring(7);
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
 
-                String username = jwtUtil.extrairUsername(jwt);
-                //System.out.println("### JWT username extraído: " + username);
+            String jwt = authHeader.substring(7);
 
-                if (jwtUtil.validarToken(jwt, username)) {
+            String username = jwtUtil.extrairUsername(jwt);
+            //System.out.println("### JWT username extraído: " + username);
 
-                    UsernamePasswordAuthenticationToken authToken =
-                            new UsernamePasswordAuthenticationToken(
-                                    username,
-                                    null,
-                                    Collections.emptyList()
-                            );
+            if (jwtUtil.validarToken(jwt, username)) {
 
-                    SecurityContextHolder.getContext().setAuthentication(authToken);
-                }
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(
+                                username,
+                                null,
+                                Collections.emptyList()
+                        );
+
+                SecurityContextHolder.getContext().setAuthentication(authToken);
             }
+        }
 
-            filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response);
 
-        //} catch (Exception ex) {
-
-        //    SecurityContextHolder.clearContext();
-        //    authenticationEntryPoint.commence(request, response,
-        //            new org.springframework.security.authentication.InsufficientAuthenticationException(
-        //                    "Token inválido ou expirado"
-        //            )
-        //    );
-        //}
     }
 }

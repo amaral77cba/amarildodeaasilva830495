@@ -109,11 +109,11 @@ public class ArquivoResource {
             @PathVariable UUID uuid,
             @Parameter(
                     description = "Tempo de validade da URL em minutos",
-                    example = "10"
+                    example = "30"
             )
-            @RequestParam(defaultValue = "10") int minutos
+            @RequestParam(defaultValue = "30") int minutos
     ) {
-        System.out.println("###_Aqui0302");
+        //System.out.println("###_Aqui0302");
         String url = arquivoStorageService.gerarUrlDownload(uuid, minutos);
         return ResponseEntity.ok(url);
 
@@ -138,9 +138,9 @@ public class ArquivoResource {
 
         Arquivo arquivo = arquivoService.buscarPorUuid(uuid);
 
-        System.out.println("### uuid informado: " + uuid);
+        //System.out.println("### uuid informado: " + uuid);
         Resource resource = arquivoService.download(arquivo);
-        System.out.println("### linkgerado para download: " + resource);
+        //System.out.println("### linkgerado para download: " + resource);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(arquivo.getContentType()))

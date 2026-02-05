@@ -82,18 +82,10 @@ public class MinioService {
             );
             // troca apenas o host
             url = url.replace("http://minio:9000/", "http://localhost/minio/");
-            System.out.println("###TrocadeURL_PontoDois");
+            //System.out.println("###TrocadeURL_PontoDois");
 
             return url;
 
-//            return minioClient.getPresignedObjectUrl(
-//                    GetPresignedObjectUrlArgs.builder()
-//                            .bucket(bucket)
-//                            .object(objectName)
-//                            .method(Method.GET)
-//                            .expiry(minutosExpiracao * 60)
-//                            .build()
-//            );
         } catch (Exception e) {
             throw new RuntimeException("Erro ao gerar URL de download", e);
         }

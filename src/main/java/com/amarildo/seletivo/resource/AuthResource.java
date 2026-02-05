@@ -64,9 +64,9 @@ public class AuthResource {
 
             //Gera tokens
             String accessToken = jwtUtil.gerarAccessToken(username);
-            System.out.println("###accessToken:  " + accessToken);
+            //System.out.println("###accessToken:  " + accessToken);
             String refreshToken = jwtUtil.gerarRefreshToken(username);
-            System.out.println("###refreshToken: " + refreshToken);
+            //System.out.println("###refreshToken: " + refreshToken);
 
             ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                     .httpOnly(true)
