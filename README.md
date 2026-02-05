@@ -7,7 +7,7 @@
 **Inscrição:** 16377  
 **Nome:** Amarildo de Arruda Assumpção Silva  
 **CPF:** 830.495.331-53  
-**Celular:** (9) 9281-6585  
+**Celular:** (9) 9281-6585  | **e-mail:** amaral77@gmail.com
 
 ---
 
@@ -15,12 +15,13 @@
 
 **Cargo:** Analista de Tecnologia da Informação  
 **Perfil:** Engenheiro da Computação  
+**Projeto:** Projeto Desenvolvedor Back End
 
 ---
 
 ## 📦 PROJETO
 
-### Gerenciador de Discografia de Artistas
+## Gerenciador de Discografia de Artistas
 
 O projeto é uma **API REST** desenvolvida com **Spring Boot**, utilizando **Docker**, **Java 21**, **PostgreSQL** como banco de dados e **MinIO** para armazenamento de arquivos.
 
@@ -28,9 +29,19 @@ O projeto é uma **API REST** desenvolvida com **Spring Boot**, utilizando **Doc
 
 ## 🛠️ TECNOLOGIAS UTILIZADAS
 
-- Spring Boot com Java 21  
+- Java 21 com Spring Boot 3+
 - PostgreSQL 17  
 - MinIO `RELEASE.2023-10-07T15-07-38Z`
+
+---
+
+## 🚀 Funcionalidades Principais
+
+- **Gestão de Discografia:** CRUD completo de Artistas e Álbuns com relacionamentos.
+
+- **Upload de Mídias:** Integração com S3 (MinIO) para armazenamento de imagens.
+
+- **Persistência:** Consultas otimizadas no PostgreSQL 17 utilizando Spring Data JPA.
 
 ---
 
@@ -38,18 +49,28 @@ O projeto é uma **API REST** desenvolvida com **Spring Boot**, utilizando **Doc
 
 - **Swagger:** 8080  
 - **PostgreSQL:** 5432  
-- **MinIO:** 9000 e 9001  
+- **MinIO:** 9000 e 9001
+- **Nginx:** 80
+
+---
+
+## DIAGRAMA DAS TABELAS
+
+<p align="center">
+  <img src="docs/DERDiscografia.png" alt="Arquitetura da Aplicação" width="600"/>
+</p>
+
 
 ---
 
 ## 🚀 PASSOS PARA SUBIR A APLICAÇÃO NO DOCKER
 
-### Comandos para o Bash
+## Comandos para o Bash
 
 ```bash
 git clone https://github.com/amaral77cba/amarildodeaasilva830495.git
 cd amarildodeaasilva830495
-docker-compose build
+docker-compose build --no-cache
 docker-compose up -d
 ```
 
@@ -67,6 +88,7 @@ docker-compose up -d
 
 	O sistema retornará erro de CORS (Access-Control-Allow-Origin)
 	
+
 2) Autenticação JWT com expiração a cada 5 minutos e possibilidade de renovação.
    
 	Autenticação
@@ -92,6 +114,7 @@ docker-compose up -d
 
 	-o token estará valido por 5 minutos
 
+	
 	
 	Renovação
 
