@@ -26,7 +26,7 @@
             const album = JSON.parse(message.body);
 
             const li = document.createElement("li");
-            li.innerText = `Novo álbum cadastrado: ${album.idenAlbum} - ${album.descricaoAlbum} - ${album.descricaoTipoAlbum}`;
+            li.innerText = `Novo album cadastrado: ${album.idenAlbum} - ${album.descricaoAlbum} - ${album.descricaoTipoAlbum}`;
             document.getElementById("messages").appendChild(li);
         });
     }, function (error) {

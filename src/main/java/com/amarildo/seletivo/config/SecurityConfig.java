@@ -46,14 +46,14 @@ public class SecurityConfig {
 
                                 // ACTUATOR
                                 "/actuator/health",
-                                "/actuator/health/**"
+                                "/actuator/health/**",
 
                                 // WEBSOCKET
-                                //"/ws/**",
+                                "/ws/**",
                                 //"/topic/**",
 
                                 // ARQUIVO DE TESTES
-                                //"/ws-teste.html",
+                                "/ws-notificacao.html"
                                 //"/**/*.html"
                         ).permitAll()
                         .anyRequest().authenticated()
