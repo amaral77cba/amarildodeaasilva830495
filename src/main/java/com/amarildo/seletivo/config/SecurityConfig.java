@@ -50,11 +50,10 @@ public class SecurityConfig {
 
                                 // WEBSOCKET
                                 "/ws/**",
-                                //"/topic/**",
 
                                 // ARQUIVO DE TESTES
                                 "/ws-notificacao.html"
-                                //"/**/*.html"
+
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
